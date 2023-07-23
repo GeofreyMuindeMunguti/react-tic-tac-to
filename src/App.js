@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import './App.css';
 import Square from './components/Square';
+import { useOnlineStatus } from './hooks/network';
 
+export const UserContext = createContext(null);
 
 function calculate_winner(last_play, values) {
   const winning_positions = [
@@ -25,11 +27,14 @@ function calculate_winner(last_play, values) {
   return null;
 }
 
+
 function App() {
+
   const [values, setValues] = useState(Array(9).fill(null));
   const [isNext, setIsNext] = useState(false);
   const [message, setMessage] = useState("Start playing");
   const [playCount, setPlayCount] = useState(0);
+  const isOnline = useOnlineStatus();
 
   function restart_match() {
     console.log("Restarting match")
@@ -72,8 +77,9 @@ function App() {
   }
 
   return (
-    <>
+    <UserContext.Provider value={'Muinde'}>
     <div>
+      {isOnline ? <p>Online</p>: <p>Offline</p>}
       <p className='message'>{message}</p>
     </div>
     <div className='board'>
@@ -93,7 +99,7 @@ function App() {
         <Square dispay={values[8]} onSquareClick={() => handleOnClick(8)}/>
       </div>
     </div>
-    </>
+    </UserContext.Provider>
   );
 }
 

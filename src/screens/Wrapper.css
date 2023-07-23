@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+}
+
+.sidebar {
+    width: 10%;
+    border: 1px solid grey;
+}
+
+.main {
+    width: 90%;
+    border: 1px solid red;
+}
